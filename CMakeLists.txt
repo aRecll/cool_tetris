@@ -10,6 +10,9 @@ qt_add_executable(cool_tetris
     main.cpp
     mainwindow.cpp
     mainwindow.h
+    tetris.h tetris.cpp
+    tetrisengine.h tetrisengine.cpp
+    tetromino.h tetromino.cpp
 )
 
 target_link_libraries(cool_tetris
