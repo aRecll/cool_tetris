@@ -8,11 +8,11 @@ qt_standard_project_setup()
 qt_add_executable(cool_tetris
     WIN32 MACOSX_BUNDLE
     main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    tetris.h tetris.cpp
-    tetrisengine.h tetrisengine.cpp
-    tetromino.h tetromino.cpp
+
+
+
+
+
 )
 
 target_link_libraries(cool_tetris
