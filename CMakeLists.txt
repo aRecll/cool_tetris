@@ -8,6 +8,9 @@ qt_standard_project_setup()
 qt_add_executable(cool_tetris
     WIN32 MACOSX_BUNDLE
     main.cpp
+    tetromino.h tetromino.cpp
+    game_logic.h game_logic.cpp
+    game_widget.h game_widget.cpp
 
 
 
