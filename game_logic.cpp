@@ -56,6 +56,16 @@ void GameLogic::rotate() {
     }
 }
 
+void GameLogic::instaMoveDown()
+{
+
+
+    while (!checkCollision(m_x, m_y + 1, m_curPiece)) {
+        m_y++;
+    }
+    freezePiece();
+}
+
 void GameLogic::freezePiece() {
     for (auto p : m_curPiece.getPoints(m_x, m_y)) {
         if (p.y >= 0) board[p.y][p.x] = static_cast<int>(m_curPiece.type());

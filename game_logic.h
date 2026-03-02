@@ -16,6 +16,7 @@ public:
     void moveRight();
     bool moveDown();
     void rotate();
+    void instaMoveDown();
 
     int getCell(int x, int y) const { return board[y][x]; }
     Tetromino curPiece() const { return m_curPiece; }
@@ -26,6 +27,7 @@ private:
     bool checkCollision(int dx, int dy, const Tetromino& piece);
     void freezePiece();
     void clearLines();
+
 
     int board[HEIGHT][WIDTH];
     Tetromino m_curPiece;

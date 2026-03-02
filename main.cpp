@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <ctime>
 #include <cstdlib>
-#include "MainWindow.h" // Подключаем обертку вместо GameWidget
+#include "MainWindow.h"
 
 int main(int argc, char *argv[]) {
     // Твой рандом остается
@@ -9,11 +9,18 @@ int main(int argc, char *argv[]) {
 
     QApplication app(argc, argv);
 
-    // Создаем главное окно, которое внутри себя содержит меню и игру
+
     MainWindow window;
-    window.setWindowTitle("Qt Tetris");
-    window.resize(400, 600); // Подбери размер под Тетрис
+
+#ifdef Q_OS_ANDROID
+    window.showMaximized();
+#elif defined(Q_OS_IOS)
+    window.showFullScreen();
+#else
+
+    window.resize(400, 700);
     window.show();
+#endif
 
     return app.exec();
 }
