@@ -8,10 +8,11 @@
 #include <QKeyEvent>
 #include "game_logic.h"
 #include <QElapsedTimer>
-class GameWidget : public QWidget {
+class FildWidget : public QWidget {
     Q_OBJECT
 public:
-    GameWidget(QWidget *parent = nullptr);
+    FildWidget(QWidget *parent = nullptr);
+    const GameLogic& getLogic() const { return m_game; };
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -27,7 +28,7 @@ private:
     QTimer *m_timer;
     QSet<int> pressedKeys;
     QTimer *inputTimer;
-    const int CELL_SIZE = 30;
+     int CELL_SIZE;
     void processInput();
     QElapsedTimer rotateTimer;
     const int ROTATE_COOLDOWN = 200;

@@ -8,18 +8,24 @@ GameLogic::GameLogic() {
             board[y][x] = 0;
         }
     }
+    for(int i = 0; i < 4; ++i) {
+        m_nextPieces.push_back(Tetromino(static_cast<TetrominoType>((rand() % 7) + 1)));
+    }
     spawnPiece();
 }
 
 void GameLogic::spawnPiece() {
-    m_curPiece = Tetromino(static_cast<TetrominoType>((std::rand() % 7) + 1));
+    m_curPiece = m_nextPieces.front();
+    m_nextPieces.pop_front();
+    m_nextPieces.push_back(Tetromino(static_cast<TetrominoType>((rand() % 7) + 1)));
     m_x = WIDTH / 2 - 1;
     m_y = 0;
-
+    m_canSwap=true;
     if (checkCollision(m_x, m_y, m_curPiece)) {
         for (int y = 0; y < HEIGHT; ++y)
             for (int x = 0; x < WIDTH; ++x) board[y][x] = 0;
     }
+    emit nextPiecesChanged();
 }
 
 bool GameLogic::checkCollision(int nx, int ny, const Tetromino& piece) {
@@ -93,4 +99,26 @@ void GameLogic::clearLines() {
             y++;
         }
     }
+}
+
+void GameLogic::swapPoketPiece()
+{
+    if(!m_canSwap) return;
+    if(m_poketPiece.type()==Empty){
+        m_poketPiece=m_curPiece;
+        m_curPiece = m_nextPieces.front();
+        m_nextPieces.pop_front();
+        m_nextPieces.push_back(Tetromino(static_cast<TetrominoType>((rand() % 7) + 1)));
+    }else{
+        std::swap(m_poketPiece,m_curPiece);
+        m_x = WIDTH / 2 - 1;
+        m_y = 0;
+
+
+    }
+    m_canSwap=false;
+    emit pocketChanged();
+}
+std::vector<Tetromino> GameLogic::getNextPieces() const {
+    return {m_nextPieces.begin(), m_nextPieces.end()};
 }

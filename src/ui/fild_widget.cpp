@@ -1,22 +1,23 @@
-#include "game_widget.h"
+#include "fild_widget.h"
 #include <QElapsedTimer>
-GameWidget::GameWidget(QWidget *parent) : QWidget(parent) {
+FildWidget::FildWidget(QWidget *parent) : QWidget(parent) {
+    CELL_SIZE=30;
     setFocusPolicy(Qt::StrongFocus);
     m_timer = new QTimer(this);
-    connect(m_timer, &QTimer::timeout, this, &GameWidget::gameStep);
+    connect(m_timer, &QTimer::timeout, this, &FildWidget::gameStep);
 
     m_timer->start(500);
     setFixedSize(m_game.WIDTH * CELL_SIZE, m_game.HEIGHT * CELL_SIZE);
 
     inputTimer = new QTimer(this);
-    connect(inputTimer, &QTimer::timeout, this, &GameWidget::processInput);
+    connect(inputTimer, &QTimer::timeout, this, &FildWidget::processInput);
     inputTimer->start(50);
 
     rotateTimer.start();
 
 }
 
-void GameWidget::paintEvent(QPaintEvent *) {
+void FildWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
 
 
@@ -42,19 +43,19 @@ void GameWidget::paintEvent(QPaintEvent *) {
         painter.drawRect(p.x * CELL_SIZE, p.y * CELL_SIZE, CELL_SIZE - 1, CELL_SIZE - 1);
     }
 }
-void GameWidget::keyPressEvent(QKeyEvent *event) {
+void FildWidget::keyPressEvent(QKeyEvent *event) {
     if (!event->isAutoRepeat()) {
         pressedKeys.insert(event->key());
     }
 
 }
 
-void GameWidget::keyReleaseEvent(QKeyEvent *event) {
+void FildWidget::keyReleaseEvent(QKeyEvent *event) {
     if (!event->isAutoRepeat()) {
         pressedKeys.remove(event->key());
     }
 }
-void GameWidget::processInput() {
+void FildWidget::processInput() {
     if (pressedKeys.contains(Qt::Key_Left))  m_game.moveLeft();
     if (pressedKeys.contains(Qt::Key_Right)) m_game.moveRight();
     if (pressedKeys.contains(Qt::Key_Down))  m_game.moveDown();
@@ -72,12 +73,17 @@ void GameWidget::processInput() {
 
 
     }
-    if (pressedKeys.contains(Qt::Key_Escape)) emit escapePressed();
-
+    if(pressedKeys.contains(Qt::Key_Shift)) m_game.swapPoketPiece();
+    if (pressedKeys.contains(Qt::Key_Escape)){
+        pressedKeys.clear();
+        emit escapePressed();
+        return;
+    }
     update();
 }
 
-void GameWidget::gameStep() {
+void FildWidget::gameStep() {
     m_game.moveDown();
+
     update();
 }

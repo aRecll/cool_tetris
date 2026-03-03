@@ -4,21 +4,22 @@ project(cool_tetris LANGUAGES CXX)
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
 
 qt_standard_project_setup()
-
+include_directories(src/core src/ui)
 qt_add_executable(cool_tetris
     WIN32 MACOSX_BUNDLE
-    main.cpp
-    tetromino.h tetromino.cpp
-    game_logic.h game_logic.cpp
-    game_widget.h game_widget.cpp
-    mainwindow.h mainwindow.cpp
+    src/main.cpp
 
 
+    src/core/tetromino.h src/core/tetromino.cpp
+    src/core/game_logic.h src/core/game_logic.cpp
 
 
-
+    src/ui/fild_widget.h src/ui/fild_widget.cpp
+    src/ui/mainwindow.h src/ui/mainwindow.cpp
+    src/ui/next_pieces_widget.h src/ui/next_pieces_widget.cpp
+    src/ui/game_widget.h src/ui/game_widget.cpp
+    src/ui/poket_piece_widget.h src/ui/poket_piece_widget.cpp
 )
-
 target_link_libraries(cool_tetris
     PRIVATE
         Qt::Core

@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QStackedWidget>
-#include "game_widget.h" // Твой существующий класс игры
+#include "game_widget.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -15,8 +15,10 @@ private slots:
     void escClicked();
 private:
     QStackedWidget *stackedWidget;
-    GameWidget *gameWidget;
+    GameWidget * gameWidget;
     QWidget *menuWidget;
+    QPushButton *btnStart;
+    QPushButton *btnExit ;
 };
 
 #endif // MAINWINDOW_H

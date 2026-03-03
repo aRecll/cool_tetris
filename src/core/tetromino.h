@@ -13,6 +13,7 @@ public:
     Tetromino(TetrominoType type = Empty);
     void rotate();
     std::vector<Point> getPoints(int offsetX = 0, int offsetY = 0) const;
+    void setPoints(int offsetX = 0, int offsetY = 0);
     TetrominoType type() const { return m_type; }
     QColor color() const;
     static QColor getColorForType(int type);

@@ -30,6 +30,8 @@ std::vector<Point> Tetromino::getPoints(int offsetX, int offsetY) const {
     return absolute;
 }
 
+
+
 QColor Tetromino::color() const {
     switch (m_type) {
     case I: return Qt::cyan;
