@@ -8,28 +8,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     stackedWidget = new QStackedWidget(this);
 
 
-    menuWidget = new QWidget();
-    QVBoxLayout *layout = new QVBoxLayout(menuWidget);
+    menuWidget = new MenuWidget(this);
+
     gameWidget=new GameWidget(this);
-    QLabel *title = new QLabel("QT TETRIS");
-    title->setStyleSheet("font-size: 40px; font-weight: bold; margin-bottom: 20px;");
-    title->setAlignment(Qt::AlignCenter);
 
-    btnStart = new QPushButton("ИГРАТЬ");
-    btnExit = new QPushButton("ВЫХОД");
-
-
-    QString btnStyle = "QPushButton { font-size: 20px; padding: 10px; background: #333; color: white; border-radius: 5px; }"
-                       "QPushButton:hover { background: #555; }";
-    btnStart->setStyleSheet(btnStyle);
-    btnExit->setStyleSheet(btnStyle);
-
-    layout->addStretch();
-    layout->addWidget(title);
-    layout->addWidget(btnStart);
-    layout->addWidget(btnExit);
-    layout->addStretch();
-    layout->setAlignment(Qt::AlignCenter);
 
 
 
@@ -44,10 +26,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     setCentralWidget(stackedWidget);
 
 
-    connect(btnStart, &QPushButton::clicked, this, &MainWindow::onStartClicked);
-    connect(btnExit, &QPushButton::clicked, this, &MainWindow::close);
+    connect(menuWidget, &MenuWidget::onStartClicked, this, &MainWindow::onStartClicked);
+    connect(menuWidget, &MenuWidget::onExitClicked, this, &MainWindow::close);
+   // connect(btnExit, &QPushButton::clicked, this, &MainWindow::close);
 
-    connect(gameWidget, &GameWidget::escapePressed, this, &MainWindow::escClicked);
+   connect(gameWidget, &GameWidget::escapePressed, this, &MainWindow::escClicked);
 
 
 }
@@ -64,6 +47,6 @@ void MainWindow::escClicked() {
     stackedWidget->setCurrentIndex(0);
     menuWidget ->setFocus();
 
-    btnStart->setFocus(Qt::OtherFocusReason);
+
 
 }

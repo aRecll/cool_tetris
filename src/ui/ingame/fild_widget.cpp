@@ -6,7 +6,8 @@ FildWidget::FildWidget(QWidget *parent) : QWidget(parent) {
     m_timer = new QTimer(this);
     connect(m_timer, &QTimer::timeout, this, &FildWidget::gameStep);
 
-    m_timer->start(500);
+    m_timer->start(50);
+
     setFixedSize((m_game.WIDTH * CELL_SIZE)+20, (m_game.HEIGHT * CELL_SIZE)+20);
 
     inputTimer = new QTimer(this);

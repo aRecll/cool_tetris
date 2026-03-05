@@ -1,15 +1,16 @@
-#include "menu_widget.h"
+#include "pause_widget.h"
 
-MenuWidget::MenuWidget(QWidget *parent)
+PauseWidget::PauseWidget(QWidget *parent)
     : QWidget{parent}
 {
+    setStyleSheet("background-color: rgba(0, 0, 0, 150);");
     layout = new QVBoxLayout(this);
-    title = new QLabel("QT TETRIS");
+    title = new QLabel("ПАУЗА");
     title->setStyleSheet("font-size: 40px; font-weight: bold; margin-bottom: 20px;");
     title->setAlignment(Qt::AlignCenter);
 
-    btnStart = new QPushButton("ИГРАТЬ");
-    btnExit = new QPushButton("ВЫХОД");
+    btnStart = new QPushButton("ПРОДОЛЖИТЬ");
+    btnExit = new QPushButton("ВЫЙТИ В ГЛАВНОЕ МЕНЮ");
 
 
     QString btnStyle = "QPushButton { font-size: 20px; padding: 10px; background: #333; color: white; border-radius: 5px; }"
@@ -25,7 +26,8 @@ MenuWidget::MenuWidget(QWidget *parent)
     layout->setAlignment(Qt::AlignCenter);
 
 
-    connect(btnStart, &QPushButton::clicked, this, &MenuWidget::onStartClicked);
-    connect(btnExit, &QPushButton::clicked, this, &MenuWidget::onExitClicked);
+    connect(btnStart, &QPushButton::clicked, this, &PauseWidget::backInGame);
+    connect(btnExit, &QPushButton::clicked, this, &PauseWidget::onExitClicked);
+
 
 }
