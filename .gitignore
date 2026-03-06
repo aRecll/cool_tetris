@@ -81,4 +81,4 @@ CMakeLists.txt.user*
 .uic/
 /build*/
 
-/personal/
+/personal
