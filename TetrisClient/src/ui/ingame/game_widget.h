@@ -11,7 +11,9 @@
 #include "poket_piece_widget.h"
 #include "score_widget.h"
 #include "pause_widget.h"
+#include "game_over_widget.h"
 #include <QStackedLayout>
+
 class GameWidget : public QWidget
 {
     Q_OBJECT
@@ -19,9 +21,9 @@ public:
      GameWidget(QWidget *parent = nullptr);
 
     QHBoxLayout *hLayout ;
-     QVBoxLayout *lefVLayout;
+    QVBoxLayout *lefVLayout;
     QVBoxLayout *midVLayout;
-     QVBoxLayout *rightVLayout;
+    QVBoxLayout *rightVLayout;
 
     FildWidget* fildWidget;
     NextPiecesWidget *nextWidget ;
@@ -30,14 +32,15 @@ public:
     QStackedWidget *stackedWidget;
     QWidget *gameLayer;
     PauseWidget* pauseWidget;
-
-
+    GameOverWidget* gameOverWidget;
 
     void setFocus(Qt::FocusReason reason = Qt::OtherFocusReason);
+    
 private slots:
     void pauseOff();
     void pauseOn();
     void restart();
+    void showGameOver();
 
 signals:
     void escapePressed();

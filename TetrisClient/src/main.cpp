@@ -8,7 +8,8 @@ int main(int argc, char *argv[]) {
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
     QApplication app(argc, argv);
-
+    QCoreApplication::setOrganizationName("aRecll");
+    QCoreApplication::setApplicationName("cool_tetris");
 
     MainWindow window;
 

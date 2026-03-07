@@ -1,11 +1,10 @@
 #ifndef PAUSE_WIDGET_H
 #define PAUSE_WIDGET_H
 
-#include <QWidget>
-#include <QVBoxLayout>
+#include "overlay_widget.h"
 #include <QPushButton>
-#include <QLabel>
-class PauseWidget : public QWidget
+
+class PauseWidget : public OverlayWidget
 {
     Q_OBJECT
 public:
@@ -15,13 +14,9 @@ signals:
     void startNewGame();
     void onExitClicked();
 private:
-
-    QVBoxLayout *layout;
     QPushButton *btnStart;
-    QPushButton *btnExit ;
+    QPushButton *btnExit;
     QPushButton *btnNewGame;
-    QLabel *title;
-signals:
 };
 
 #endif // PAUSE_WIDGET_H

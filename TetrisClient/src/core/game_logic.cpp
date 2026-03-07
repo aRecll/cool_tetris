@@ -49,9 +49,11 @@ void GameLogic::restart()
 {
     score = 0;
     level = 0;
+
     totalLines = 0;
     linesToNextLevel = 10;
     m_isPaused = false;
+    m_isGameEnd=false;
     m_nextPieces.clear();
     m_poketPiece=Empty;
 
@@ -87,6 +89,13 @@ int GameLogic::calculateInterval(int lvl) {
     return std::max(16, (int)(1000 * std::pow(0.85, lvl)));
 }
 
+void GameLogic::collapseGame()
+{
+    pause();
+    m_isGameEnd=true;
+    emit gameEnd();
+}
+
 void GameLogic::updateSpeed() {
     currentInterval = calculateInterval(level);
     if (!m_isPaused) {
@@ -102,15 +111,7 @@ void GameLogic::spawnPiece() {
     m_y = 0;
     m_canSwap=true;
     if (checkCollision(m_x, m_y, m_curPiece)) {
-        for (int y = 0; y < HEIGHT; ++y)
-            for (int x = 0; x < WIDTH; ++x) board[y][x] = 0;
-        level = 0;
-        totalLines = 0;
-        linesToNextLevel = 10;
-        updateSpeed();
-        score = 0;
-        emit levelChanged(0);
-        emit scoreChanged();
+        collapseGame();
     }
     emit nextPiecesChanged();
 }

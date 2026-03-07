@@ -34,6 +34,7 @@ public:
     void resume();
     void restart();
     bool isPaused() const { return m_isPaused; }
+    bool isGameEnd() const { return m_isGameEnd; }
     
 
     int getLevel() const { return level; }
@@ -61,19 +62,20 @@ private:
     void updateScoreDrope(bool isDropDown);
     void updateSpeed();
     int calculateInterval(int lvl);
-
+    void collapseGame();
     int score;
     int board[HEIGHT][WIDTH];
     Tetromino m_curPiece;
     Tetromino m_poketPiece;
     bool m_canSwap;
     int m_x, m_y;
-    bool isGameEnd;
+
     std::deque<Tetromino> m_nextPieces;
     
-    // Таймер и скорость
+
     QTimer *m_timer;
     bool m_isPaused;
+    bool m_isGameEnd;
     int level;
     int totalLines;
     int linesToNextLevel;

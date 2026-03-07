@@ -8,6 +8,10 @@ GameWidget::GameWidget(QWidget *parent)
 
     pauseWidget = new PauseWidget(this);
     pauseWidget->hide();
+    
+    gameOverWidget = new GameOverWidget(this);
+    gameOverWidget->hide();
+    
     gameLayer = new QWidget(this);
     hLayout = new QHBoxLayout(gameLayer);
 
@@ -31,6 +35,7 @@ GameWidget::GameWidget(QWidget *parent)
 
     mainLayout->addWidget(gameLayer);
     mainLayout->addWidget(pauseWidget);
+    mainLayout->addWidget(gameOverWidget);
     pauseWidget->raise();
 
 
@@ -38,10 +43,14 @@ GameWidget::GameWidget(QWidget *parent)
     connect(&fildWidget->getLogic(), &GameLogic::nextPiecesChanged, nextWidget, QOverload<>::of(&NextPiecesWidget::update));
     connect(&fildWidget->getLogic(), &GameLogic::pocketChanged, poketPieceWodget, QOverload<>::of(&PoketPieceWidget::update));
     connect(&fildWidget->getLogic(), &GameLogic::scoreChanged, scoreWidget, QOverload<>::of(&ScoreWidget::update));
+    connect(&fildWidget->getLogic(), &GameLogic::gameEnd, this, &GameWidget::showGameOver);
 
     connect(pauseWidget, &PauseWidget::onExitClicked, this, &GameWidget::escapePressed);
     connect(pauseWidget, &PauseWidget::backInGame, this, &GameWidget::pauseOff);
     connect(pauseWidget, &PauseWidget::startNewGame, this, &GameWidget::restart);
+    
+    connect(gameOverWidget, &GameOverWidget::onExitClicked, this, &GameWidget::escapePressed);
+    connect(gameOverWidget, &GameOverWidget::startNewGame, this, &GameWidget::restart);
 
     connect(fildWidget, &FildWidget::escapePressed, this, &GameWidget::pauseOn);
 }
@@ -63,6 +72,7 @@ void GameWidget::restart()
     fildWidget->restart();
     fildWidget->setInputTimerEnabled(true);
     pauseWidget->hide();
+    gameOverWidget->hide();
 }
 
 void GameWidget::pauseOff() {
@@ -70,4 +80,11 @@ void GameWidget::pauseOff() {
     fildWidget->setInputTimerEnabled(true);
     pauseWidget->hide();
     fildWidget->setFocus();
+}
+
+void GameWidget::showGameOver() {
+    gameOverWidget->setFinalScore(fildWidget->getLogic().getScore());
+    gameOverWidget->show();
+    gameOverWidget->raise();
+    gameOverWidget->setFocus();
 }

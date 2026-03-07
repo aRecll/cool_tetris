@@ -4,6 +4,7 @@
 #include <QPushButton>
 #include <QLabel>
 
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     stackedWidget = new QStackedWidget(this);
 

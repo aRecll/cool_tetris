@@ -22,6 +22,8 @@ qt_add_executable(TetrisClient
     src/ui/ingame/poket_piece_widget.h src/ui/ingame/poket_piece_widget.cpp
     src/ui/ingame/score_widget.h src/ui/ingame/score_widget.cpp
     src/ui/ingame/pause_widget.h src/ui/ingame/pause_widget.cpp
+    src/ui/ingame/overlay_widget.h src/ui/ingame/overlay_widget.cpp
+    src/ui/ingame/game_over_widget.h src/ui/ingame/game_over_widget.cpp
     src/ui/menus/menu_widget.h src/ui/menus/menu_widget.cpp
     src/ui/menus/setting_widget.h src/ui/menus/setting_widget.cpp
 )

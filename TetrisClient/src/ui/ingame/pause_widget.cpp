@@ -1,37 +1,24 @@
 #include "pause_widget.h"
 
 PauseWidget::PauseWidget(QWidget *parent)
-    : QWidget{parent}
+    : OverlayWidget{parent}
 {
-    setStyleSheet("background-color: rgba(0, 0, 0, 150);");
-    layout = new QVBoxLayout(this);
-    title = new QLabel("ПАУЗА");
-    title->setStyleSheet("font-size: 40px; font-weight: bold; margin-bottom: 20px;");
-    title->setAlignment(Qt::AlignCenter);
+    title->setText("ПАУЗА");
+    
+    addStretchTop();
+    
+    btnStart = createButton("ПРОДОЛЖИТЬ");
+    btnNewGame = createButton("НАЧАТЬ ЗАНОВО");
+    btnExit = createButton("ВЫЙТИ В ГЛАВНОЕ МЕНЮ");
 
-    btnStart = new QPushButton("ПРОДОЛЖИТЬ");
-    btnNewGame= new QPushButton("НАЧАТЬ ЗАНОВО");
-    btnExit = new QPushButton("ВЫЙТИ В ГЛАВНОЕ МЕНЮ");
-
-
-    QString btnStyle = "QPushButton { font-size: 20px; padding: 10px; background: #333; color: white; border-radius: 5px; }"
-                       "QPushButton:hover { background: #555; }";
-    btnStart->setStyleSheet(btnStyle);
-    btnNewGame->setStyleSheet(btnStyle);
-    btnExit->setStyleSheet(btnStyle);
-
-    layout->addStretch();
-    layout->addWidget(title);
     layout->addWidget(btnStart);
     layout->addWidget(btnNewGame);
     layout->addWidget(btnExit);
-    layout->addStretch();
+    
+    addStretchBottom();
     layout->setAlignment(Qt::AlignCenter);
-
 
     connect(btnStart, &QPushButton::clicked, this, &PauseWidget::backInGame);
     connect(btnNewGame, &QPushButton::clicked, this, &PauseWidget::startNewGame);
     connect(btnExit, &QPushButton::clicked, this, &PauseWidget::onExitClicked);
-
-
 }

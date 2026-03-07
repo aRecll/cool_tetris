@@ -65,23 +65,26 @@ void FildWidget::keyReleaseEvent(QKeyEvent *event) {
 }
 
 void FildWidget::processInput() {
-    if (pressedKeys.contains(Qt::Key_Left))  m_game.moveLeft();
-    if (pressedKeys.contains(Qt::Key_Right)) m_game.moveRight();
-    if (pressedKeys.contains(Qt::Key_Down))  m_game.moveDown();
-    if (pressedKeys.contains(Qt::Key_R))  m_game.restart();
-    if (pressedKeys.contains(Qt::Key_Up)) {
+    if (pressedKeys.contains(Qt::Key_Left) and !m_game.isPaused() and !m_game.isGameEnd())  m_game.moveLeft();
+    if (pressedKeys.contains(Qt::Key_Right)and !m_game.isPaused() and !m_game.isGameEnd()) m_game.moveRight();
+    if (pressedKeys.contains(Qt::Key_Down)and !m_game.isPaused() and !m_game.isGameEnd())  m_game.moveDown();
+
+    if (pressedKeys.contains(Qt::Key_Up)and !m_game.isPaused() and !m_game.isGameEnd()) {
         if (rotateTimer.elapsed() > ROTATE_COOLDOWN) {
             m_game.rotate();
             rotateTimer.restart();
         }
     }
-    if(pressedKeys.contains(Qt::Key_Space)){
+    if(pressedKeys.contains(Qt::Key_Space)and !m_game.isPaused() and !m_game.isGameEnd()){
         if (rotateTimer.elapsed() > ROTATE_COOLDOWN) {
             m_game.instaMoveDown();
             rotateTimer.restart();
         }
     }
-    if(pressedKeys.contains(Qt::Key_Shift)) m_game.swapPoketPiece();
+    if(pressedKeys.contains(Qt::Key_Shift)and !m_game.isPaused() and !m_game.isGameEnd()) m_game.swapPoketPiece();
+
+
+    if (pressedKeys.contains(Qt::Key_R))  m_game.restart();
     if (pressedKeys.contains(Qt::Key_Escape)){
         pressedKeys.clear();
         emit escapePressed();
