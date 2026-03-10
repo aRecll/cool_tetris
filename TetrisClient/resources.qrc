@@ -4,5 +4,6 @@
     <file alias="user_icon.svg">assets/icons/user_icon.svg</file>
     <file alias="statistic_icon.svg">assets/icons/statistic_icon.svg</file>
     <file alias="app_icon.ico">assets/icons/app_icon.ico</file>
+    <file alias="background_main.png">assets/backgrounds/background_main.png</file>
 </qresource>
 </RCC>

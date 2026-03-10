@@ -26,13 +26,14 @@ qt_add_executable(TetrisClient
     src/ui/ingame/game_over_widget.h src/ui/ingame/game_over_widget.cpp
     src/ui/menus/menu_widget.h src/ui/menus/menu_widget.cpp
     src/ui/menus/setting_widget.h src/ui/menus/setting_widget.cpp
+    src/ui/menus/auth_form.h src/ui/menus/auth_form.cpp
     src/settings/setting_manager.h src/settings/setting_manager.cpp
     src/network/network_client.cpp
     src/network/network_manager.h src/network/network_manager.cpp
     resources.qrc
     assets/icons/settings_icon.svg assets/icons/user_icon.svg
     assets/icons/statistic_icon.svg
-    src/ui/menus/auth_form.ui
+    assets/backgrounds/background_main.png
 )
 
 target_link_libraries(TetrisClient

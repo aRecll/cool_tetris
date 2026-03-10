@@ -6,6 +6,11 @@
 #include <QDebug>
 #include <iostream>
 #include <windows.h>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+
+
+QSqlDatabase db;
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
     QByteArray localMsg = msg.toLocal8Bit();
     std::cout << localMsg.constData() << std::endl;
@@ -54,13 +59,22 @@ int main(int argc, char *argv[]) {
 //     }
 // #endif
     QCoreApplication app(argc, argv);
+db=QSqlDatabase::addDatabase("QPSQL");
+db.setDatabaseName("./testDB.db");
     //qInstallMessageHandler(myMessageOutput);
     SimpleServer server;
+
+    if(db.open()){
+        qDebug()<<"запуск дб норм:";
+    }else{
+        qDebug() << "Ошибка запуска дб:";
+    }
     if (!server.listen(QHostAddress::LocalHost, 5000)) {
         qDebug() << "Ошибка запуска сервера:" << server.errorString();
         return 1;
     }
-
+    QSqlQuery *query=new QSqlQuery(db);
+    query->exec("CRATE TABLE TopResults(nickname TEXT,BestScore INT);");
     qDebug() << "Сервер запущен на порту 5000";
 
     return app.exec();
