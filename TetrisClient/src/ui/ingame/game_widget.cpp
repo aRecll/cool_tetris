@@ -51,6 +51,7 @@ GameWidget::GameWidget(QWidget *parent)
     
     connect(gameOverWidget, &GameOverWidget::onExitClicked, this, &GameWidget::escapePressed);
     connect(gameOverWidget, &GameOverWidget::startNewGame, this, &GameWidget::restart);
+   // connect(gameOverWidget, &GameOverWidget::startNewGame, fildWidget, &FildWidget::getLogic);
 
     connect(fildWidget, &FildWidget::escapePressed, this, &GameWidget::pauseOn);
 }
@@ -73,6 +74,7 @@ void GameWidget::restart()
     fildWidget->setInputTimerEnabled(true);
     pauseWidget->hide();
     gameOverWidget->hide();
+    fildWidget->getLogic().resume();
 }
 
 void GameWidget::pauseOff() {
@@ -83,6 +85,7 @@ void GameWidget::pauseOff() {
 }
 
 void GameWidget::showGameOver() {
+    fildWidget->setInputTimerEnabled(false);
     gameOverWidget->setFinalScore(fildWidget->getLogic().getScore());
     gameOverWidget->show();
     gameOverWidget->raise();

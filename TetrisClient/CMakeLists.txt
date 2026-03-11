@@ -27,6 +27,7 @@ qt_add_executable(TetrisClient
     src/ui/menus/menu_widget.h src/ui/menus/menu_widget.cpp
     src/ui/menus/setting_widget.h src/ui/menus/setting_widget.cpp
     src/ui/menus/auth_form.h src/ui/menus/auth_form.cpp
+    src/ui/menus/auth_form.ui
     src/settings/setting_manager.h src/settings/setting_manager.cpp
     src/network/network_client.cpp
     src/network/network_manager.h src/network/network_manager.cpp

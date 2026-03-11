@@ -7,6 +7,11 @@
 #include <QLabel>
 
 
+void MainWindow::debuqqq(){
+    gameWidget->fildWidget->getLogic().getLinesCleared();
+
+}
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     SettingsManager::instance().loadSettings();
     stackedWidget = new QStackedWidget(this);
@@ -24,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(menuWidget, &MenuWidget::onExitClicked, this, &MainWindow::close);
     connect(gameWidget, &GameWidget::escapePressed, this, &MainWindow::escClicked);
     connect(gameWidget,&GameWidget::gameEnd,this,&MainWindow::onGameEnd);
+   // connect(gameWidget->fildWidget->getLogic(),&GameLogic::scoreChanged,this,&MainWindow::debuqqq);
    // connect(gameWidget, &GameWidget::gameEnd,this,&MainWindow::updateScores);
 }
 
@@ -32,7 +38,6 @@ void MainWindow::onStartClicked() {
     stackedWidget->setCurrentIndex(1);
     gameWidget->restart();
     gameWidget->setFocus();
-
 }
 
 void MainWindow::escClicked() {
@@ -40,7 +45,7 @@ void MainWindow::escClicked() {
     // if (!gameWidget->fildWidget->getLogic().isPaused()) {
     //     gameWidget->fildWidget->getLogic().pause();
     // }
-    gameWidget->restart();
+    //gameWidget->restart();
     gameWidget->clearFocus();
     stackedWidget->setCurrentIndex(0);
     menuWidget->setFocus();

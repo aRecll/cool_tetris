@@ -84,7 +84,7 @@ void FildWidget::processInput() {
     if(pressedKeys.contains(Qt::Key_Shift)and !m_game.isPaused() and !m_game.isGameEnd()) m_game.swapPoketPiece();
 
 
-    if (pressedKeys.contains(Qt::Key_R))  m_game.restart();
+    if (pressedKeys.contains(Qt::Key_R) && !m_game.isPaused() && !m_game.isGameEnd())  m_game.restart();
     if (pressedKeys.contains(Qt::Key_Escape)){
         pressedKeys.clear();
         emit escapePressed();

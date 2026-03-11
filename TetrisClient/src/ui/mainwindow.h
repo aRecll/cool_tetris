@@ -15,6 +15,7 @@ private slots:
     void onStartClicked();
     void escClicked();
    void onGameEnd();
+    void debuqqq();
     //void onSaveSettings();
     //void updateScores();
 private:

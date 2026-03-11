@@ -2,13 +2,13 @@
 #include <algorithm>
 #include <ctime>
 #include <cmath>
-
+#include <QDebug>
 GameLogic::GameLogic() {
     score = 0;
     level = 0;
     totalLines = 0;
     linesToNextLevel = 10;
-    m_isPaused = false;
+    m_isPaused = true;
 
     for (int y = 0; y < HEIGHT; ++y) {
         for (int x = 0; x < WIDTH; ++x) {
@@ -24,7 +24,7 @@ GameLogic::GameLogic() {
     m_timer = new QTimer(this);
     connect(m_timer, &QTimer::timeout, this, &GameLogic::onTimerTick);
     updateSpeed();
-     start();
+    start();
 }
 
 void GameLogic::start() {
@@ -39,10 +39,8 @@ void GameLogic::pause() {
 }
 
 void GameLogic::resume() {
-    if (m_isPaused) {
-        m_isPaused = false;
-        m_timer->start(currentInterval);
-    }
+    m_isPaused = false;
+    m_timer->start(currentInterval);
 }
 
 void GameLogic::restart()
@@ -73,12 +71,14 @@ void GameLogic::restart()
 
 
     updateSpeed();
-    start();
+    //start();
 }
 
 void GameLogic::onTimerTick() {
-    moveDown();
-    emit tick();
+    if (!m_isPaused) {
+        moveDown();
+        emit tick();
+    }
 }
 
 int GameLogic::calculateInterval(int lvl) {
@@ -212,12 +212,14 @@ void GameLogic::updateScoreLine(int countLines)
     default:
         break;
     }
+    qDebug()<<"score change "<<score;
     emit scoreChanged();
 }
 
 void GameLogic::updateScoreDrope(bool isDropDown)
 {
     score+= isDropDown ? 4:2;
+    qDebug()<<"score change "<<score;
     emit scoreChanged();
 }
 
