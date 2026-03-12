@@ -175,6 +175,7 @@ void MenuWidget::onSettingsBack() {
 }
 
 void MenuWidget::onStatisticClicked() {
+    m_statisticWidget->updateStatistics();
     m_stackedWidget->setCurrentIndex(3);
 }
 

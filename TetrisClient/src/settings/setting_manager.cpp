@@ -6,7 +6,7 @@ SettingsManager::SettingsManager(QObject *parent)
     , m_totalyCoutLines(0)
     , m_nickname("гость")
     , m_countGames(0)
-    , m_totalLinesCleared(0)
+    , m_totalTETRISCleared(0)
     , m_totalTetrominoesPlaced(0)
     , m_totalGameTime(0)
     , m_gamesWithMaxLineClear(0)
@@ -56,19 +56,19 @@ SettingsManager& SettingsManager::instance()
 
 void SettingsManager::loadSettings()
 {
-    // Основные настройки
+
     m_nickname = m_settings->value("player/name", "Игрок").toString();
     m_MaxScore = m_settings->value("game/bestScore", 0).toInt();
     m_totalyCoutLines = m_settings->value("game/totalyCoutLines", 0).toInt();
     
-    // Расширенная статистика
+
     m_countGames = m_settings->value("stats/countGames", 0).toInt();
-    m_totalLinesCleared = m_settings->value("stats/totalLinesCleared", 0).toInt();
+    m_totalTETRISCleared = m_settings->value("stats/totalLinesCleared", 0).toInt();
     m_totalTetrominoesPlaced = m_settings->value("stats/totalTetrominoesPlaced", 0).toInt();
     m_totalGameTime = m_settings->value("stats/totalGameTime", 0).toInt();
     m_gamesWithMaxLineClear = m_settings->value("stats/gamesWithMaxLineClear", 0).toInt();
     
-    // Загрузка раскладки клавиатуры
+
     for (auto it = m_controls.begin(); it != m_controls.end(); ++it) {
         QString keyName = QString::number(it.key());
         QString defaultVal = it.value().toString();
@@ -81,19 +81,19 @@ void SettingsManager::loadSettings()
 
 void SettingsManager::saveSettings()
 {
-    // Основные настройки
+
     m_settings->setValue("player/name", m_nickname);
     m_settings->setValue("game/bestScore", m_MaxScore);
     m_settings->setValue("game/totalyCoutLines", m_totalyCoutLines);
     
-    // Расширенная статистика
+
     m_settings->setValue("stats/countGames", m_countGames);
-    m_settings->setValue("stats/totalLinesCleared", m_totalLinesCleared);
+    m_settings->setValue("stats/totalLinesCleared", m_totalTETRISCleared);
     m_settings->setValue("stats/totalTetrominoesPlaced", m_totalTetrominoesPlaced);
     m_settings->setValue("stats/totalGameTime", m_totalGameTime);
     m_settings->setValue("stats/gamesWithMaxLineClear", m_gamesWithMaxLineClear);
     
-    // Сохранение раскладки клавиатуры
+
     for (auto it = m_controls.begin(); it != m_controls.end(); ++it) {
         m_settings->setValue("controls/" + QString::number(it.key()), it.value().toString());
     }
@@ -122,11 +122,11 @@ void SettingsManager::updateNickname(const QString &newNickname)
     m_nickname = newNickname;
 }
 
-// ========== Методы расширенной статистики ==========
 
-void SettingsManager::updateTotalLinesCleared(int lines)
+
+void SettingsManager::updateTotalTETRISCleared(int lines)
 {
-    m_totalLinesCleared += lines;
+    m_totalTETRISCleared += lines;
     if (lines == 4) {
         updateGamesWithMaxLineClear();
     }
@@ -148,16 +148,15 @@ void SettingsManager::updateTotalGameTime(int seconds)
 int SettingsManager::getAverageScore() const
 {
     if (m_countGames == 0) return 0;
-    return m_MaxScore / m_countGames;  // Упрощённо, можно улучшить хранением суммы всех очков
+    return m_MaxScore / m_countGames;
 }
-
 void SettingsManager::updateGamesWithMaxLineClear()
 {
     m_gamesWithMaxLineClear++;
     emit statisticsChanged();
 }
 
-// ========== Методы раскладки клавиатуры ==========
+
 
 QKeySequence SettingsManager::getControl(ControlAction action) const
 {

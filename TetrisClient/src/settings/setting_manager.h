@@ -43,10 +43,11 @@ public:
     void updateTotalGameTime(int seconds);
     
     int getAverageScore() const;
-    
+
     int getGamesWithMaxLineClear() const { return m_gamesWithMaxLineClear; }
     void updateGamesWithMaxLineClear();
-    
+
+    int getTotalLinesCleared() const { return m_totalLinesCleared; }
 
     QString nickname() const { return m_nickname; }
     void updateNickname(const QString &newNickname);
@@ -79,6 +80,7 @@ private:
     int m_totalyCoutLines;
     int m_countGames;
     int m_totalTETRISCleared;
+    int m_totalLinesCleared;
     int m_totalTetrominoesPlaced;
     int m_totalGameTime;
     int m_gamesWithMaxLineClear;
