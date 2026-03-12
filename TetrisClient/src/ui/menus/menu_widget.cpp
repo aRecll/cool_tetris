@@ -1,7 +1,8 @@
 #include "menu_widget.h"
 #include "setting_manager.h"
 #include "auth_form.h"
-
+#include "setting_widget.h"
+#include "statistic_widget.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPushButton>
@@ -34,6 +35,8 @@ void MenuWidget::setupUi() {
 
     m_stackedWidget->addWidget(createMainMenu());
     m_stackedWidget->addWidget(createAuthFormPage());
+    m_stackedWidget->addWidget(createSettingsPage());
+    m_stackedWidget->addWidget(createStatisticPage());
 }
 
 QWidget* MenuWidget::createMainMenu() {
@@ -98,6 +101,8 @@ QWidget* MenuWidget::createMainMenu() {
     connect(btnStart, &QPushButton::clicked, this, &MenuWidget::onStartClicked);
     connect(btnExit, &QPushButton::clicked, this, &MenuWidget::onExitClicked);
     connect(btnUser, &QPushButton::clicked, this, &MenuWidget::onUserClicked);
+    connect(btnSettings, &QPushButton::clicked, this, &MenuWidget::onSettingsClicked);
+    connect(btnStatistic, &QPushButton::clicked, this, &MenuWidget::onStatisticClicked);
 
     return page;
 }
@@ -110,6 +115,28 @@ QWidget* MenuWidget::createAuthFormPage() {
 
     connect(m_authForm, &AuthForm::authCompleted, this, &MenuWidget::onAuthDone);
     connect(m_authForm, &AuthForm::backClicked, this, &MenuWidget::onAuthBack);
+    return page;
+}
+
+QWidget* MenuWidget::createSettingsPage() {
+    auto *page = new QWidget(this);
+    auto *layout = new QVBoxLayout(page);
+    m_settingWidget = new SettingWidget(this);
+    layout->addWidget(m_settingWidget);
+
+    connect(m_settingWidget, &SettingWidget::backClicked, this, &MenuWidget::onSettingsBack);
+
+    return page;
+}
+
+QWidget* MenuWidget::createStatisticPage() {
+    auto *page = new QWidget(this);
+    auto *layout = new QVBoxLayout(page);
+    m_statisticWidget = new StatisticWidget(this);
+    layout->addWidget(m_statisticWidget);
+
+    connect(m_statisticWidget, &StatisticWidget::backClicked, this, &MenuWidget::onStatisticBack);
+
     return page;
 }
 
@@ -137,6 +164,23 @@ void MenuWidget::onUserClicked() {
     m_authForm->setNickname(SettingsManager::instance().nickname());
     m_stackedWidget->setCurrentIndex(1);
     m_authForm->setFocus();
+}
+
+void MenuWidget::onSettingsClicked() {
+    m_stackedWidget->setCurrentIndex(2);
+}
+
+void MenuWidget::onSettingsBack() {
+    m_stackedWidget->setCurrentIndex(0);
+}
+
+void MenuWidget::onStatisticClicked() {
+    m_statisticWidget->updateStatistics();
+    m_stackedWidget->setCurrentIndex(3);
+}
+
+void MenuWidget::onStatisticBack() {
+    m_stackedWidget->setCurrentIndex(0);
 }
 
 void MenuWidget::onAuthBack() {

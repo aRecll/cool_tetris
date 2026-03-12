@@ -3,15 +3,22 @@
 
 #include <QWidget>
 #include <QPushButton>
-class setting_widget : public QWidget
+#include <QLabel>
+
+class SettingWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit setting_widget(QWidget *parent = nullptr);
+    explicit SettingWidget(QWidget *parent = nullptr);
+
+signals:
+    void backClicked();
 
 private:
-    QPushButton* backButton;
-signals:
+    void setupUi();
+
+    QLabel* m_titleLabel = nullptr;
+    QPushButton* m_backButton = nullptr;
 };
 
 #endif // SETTING_WIDGET_H

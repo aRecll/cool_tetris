@@ -3,13 +3,13 @@
 PauseWidget::PauseWidget(QWidget *parent)
     : OverlayWidget{parent}
 {
-    title->setText("ПАУЗА");
+    title->setText("PAUSE");
     
     addStretchTop();
     
-    btnStart = createButton("ПРОДОЛЖИТЬ");
-    btnNewGame = createButton("НАЧАТЬ ЗАНОВО");
-    btnExit = createButton("ВЫЙТИ В ГЛАВНОЕ МЕНЮ");
+    btnStart = createButton("CONTINUE");
+    btnNewGame = createButton("PLAY AGAIN");
+    btnExit = createButton("EXIT IN MAIN MENU");
 
     layout->addWidget(btnStart);
     layout->addWidget(btnNewGame);
