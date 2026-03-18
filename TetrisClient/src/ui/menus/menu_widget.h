@@ -6,9 +6,10 @@
 
 class QStackedWidget;
 class QLabel;
-class AuthForm;
+class RegisterForm;
 class SettingWidget;
 class StatisticWidget;
+class UserWidget;
 
 class MenuWidget : public QWidget {
     Q_OBJECT
@@ -23,21 +24,23 @@ signals:
 private slots:
     void updateBestScore();
     void updateTotalLines();
-    void onUserClicked();
+
     void onSettingsClicked();
     void onSettingsBack();
     void onStatisticClicked();
     void onStatisticBack();
    // void onStatistikClicked();
-    void onAuthBack();
-
-    void onAuthDone(const QString& nickname);
+   // void onAuthBack();
+     void onUserClicked();
+    void onUserBack();
+    //void onAuthDone(const QString& nickname);
 
 private:
 
     void setupUi();
     QWidget* createMainMenu();
-    QWidget* createAuthFormPage();
+    //QWidget* createAuthFormPage();
+    QWidget* createUserWidget();
     QWidget* createSettingsPage();
     QWidget* createStatisticPage();
     void updateNicknameUI(const QString& nickname);
@@ -47,7 +50,8 @@ private:
     QLabel *m_bestScoreTitle = nullptr;
     QLabel *m_totalLinesTitle = nullptr;
     QLabel *m_nicknameLabel = nullptr;
-    AuthForm *m_authForm = nullptr;
+    //RegisterForm *m_authForm = nullptr;
+    UserWidget *m_userWidget=nullptr;
     SettingWidget *m_settingWidget = nullptr;
     StatisticWidget *m_statisticWidget = nullptr;
 };

@@ -1,5 +1,5 @@
-#ifndef AUTH_FORM_H
-#define AUTH_FORM_H
+#ifndef REGISTRATE_FORM_H
+#define REGISTRATE_FORM_H
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -9,12 +9,12 @@
 
 namespace Ui { class AuthForm; }
 
-class AuthForm : public QWidget
+class RegisterForm : public QWidget
 {
     Q_OBJECT
 public:
-    explicit AuthForm(QWidget *parent = nullptr);
-    ~AuthForm();
+    explicit RegisterForm(QWidget *parent = nullptr);
+    ~RegisterForm();
 
     QString nickname() const;
     void setNickname(const QString& nickname);
@@ -22,6 +22,7 @@ public:
 signals:
     void authCompleted(const QString& nickname);
     void backClicked();
+    void loginClicked();
 
 private slots:
     void onLoginClicked();
@@ -30,4 +31,4 @@ private:
     Ui::AuthForm *ui;
 };
 
-#endif // AUTH_FORM_H
+#endif // REGISTRATE_FORM_H

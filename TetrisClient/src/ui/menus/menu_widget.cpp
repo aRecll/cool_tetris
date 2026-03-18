@@ -1,8 +1,9 @@
 #include "menu_widget.h"
 #include "setting_manager.h"
-#include "auth_form.h"
+#include "registrate_form.h"
 #include "setting_widget.h"
 #include "statistic_widget.h"
+#include "user_widget.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPushButton>
@@ -34,7 +35,8 @@ void MenuWidget::setupUi() {
     setStyleSheet("MenuWidget { background-image: url(:/background_main.png); }");
 
     m_stackedWidget->addWidget(createMainMenu());
-    m_stackedWidget->addWidget(createAuthFormPage());
+    m_stackedWidget->addWidget(createUserWidget());
+    // m_stackedWidget->addWidget(createAuthFormPage());
     m_stackedWidget->addWidget(createSettingsPage());
     m_stackedWidget->addWidget(createStatisticPage());
 }
@@ -107,16 +109,27 @@ QWidget* MenuWidget::createMainMenu() {
     return page;
 }
 
-QWidget* MenuWidget::createAuthFormPage() {
+QWidget *MenuWidget::createUserWidget()
+{
     auto *page = new QWidget(this);
     auto *layout = new QVBoxLayout(page);
-    m_authForm = new AuthForm(this);
-    layout->addWidget(m_authForm);
+    m_userWidget = new UserWidget(this);
+    layout->addWidget(m_userWidget);
 
-    connect(m_authForm, &AuthForm::authCompleted, this, &MenuWidget::onAuthDone);
-    connect(m_authForm, &AuthForm::backClicked, this, &MenuWidget::onAuthBack);
+    connect(m_userWidget,&UserWidget::backInMainMenuClicked,this,&MenuWidget::onUserBack);
     return page;
 }
+
+// QWidget* MenuWidget::createAuthFormPage() {
+//     auto *page = new QWidget(this);
+//     auto *layout = new QVBoxLayout(page);
+//     m_userWidget = new RegisterForm(this);
+//     layout->addWidget(m_authForm);
+
+//     connect(m_authForm, &RegisterForm::authCompleted, this, &MenuWidget::onAuthDone);
+//     connect(m_authForm, &RegisterForm::backClicked, this, &MenuWidget::onAuthBack);
+//     return page;
+// }
 
 QWidget* MenuWidget::createSettingsPage() {
     auto *page = new QWidget(this);
@@ -161,9 +174,14 @@ void MenuWidget::updateNicknameUI(const QString& nickname) {
 }
 
 void MenuWidget::onUserClicked() {
-    m_authForm->setNickname(SettingsManager::instance().nickname());
+   // m_authForm->setNickname(SettingsManager::instance().nickname());
     m_stackedWidget->setCurrentIndex(1);
-    m_authForm->setFocus();
+   // m_authForm->setFocus();
+}
+
+void MenuWidget::onUserBack()
+{
+m_stackedWidget->setCurrentIndex(0);
 }
 
 void MenuWidget::onSettingsClicked() {
@@ -183,13 +201,13 @@ void MenuWidget::onStatisticBack() {
     m_stackedWidget->setCurrentIndex(0);
 }
 
-void MenuWidget::onAuthBack() {
-    m_stackedWidget->setCurrentIndex(0);
-}
+// void MenuWidget::onAuthBack() {
+//     m_stackedWidget->setCurrentIndex(0);
+// }
 
-void MenuWidget::onAuthDone(const QString& nickname) {
-    SettingsManager::instance().updateNickname(nickname);
-    updateNicknameUI(nickname);
-    emit onAuthCompleted(nickname);
-    onAuthBack();
-}
+// void MenuWidget::onAuthDone(const QString& nickname) {
+//     SettingsManager::instance().updateNickname(nickname);
+//     updateNicknameUI(nickname);
+//     emit onAuthCompleted(nickname);
+//     onAuthBack();
+// }
