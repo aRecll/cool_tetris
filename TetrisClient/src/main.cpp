@@ -3,9 +3,15 @@
 #include <cstdlib>
 #include "MainWindow.h"
 #include "network_manager.h"
+#include <QSslSocket>
+#include <QSsl>
 
 int main(int argc, char *argv[]) {
-
+    qDebug() << "Qt runtime version:" << qVersion();          // из dll
+    qDebug() << "Qt compile version:" << QT_VERSION_STR;
+    qDebug() << "OpenSSL version:" << QSslSocket::sslLibraryVersionString();
+    qDebug() << "SSL supported:"   << QSslSocket::supportsSsl();
+    qDebug() <<QSslSocket::availableBackends();
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
     QApplication app(argc, argv);
