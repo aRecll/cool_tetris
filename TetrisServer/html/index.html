@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Qt Auth</title>
+</head>
+<body>
+  <h2>Login</h2>
+  <input id="login" placeholder="login" value="admin"/><br/>
+  <input id="password" type="password" placeholder="password" value="secret123"/><br/>
+  <button onclick="doLogin()">Войти</button>
+  <button onclick="doLogout()" style="display:none" id="logout-btn">Выйти</button>
+
+  <pre id="output"></pre>
+
+<script>
+  let token = null;
+
+  async function doLogin() {
+    const res  = await fetch('/api/login', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        login:    document.getElementById('login').value,
+        password: document.getElementById('password').value
+      })
+    });
+    const data = await res.json();
+    log(data);
+
+    if (res.ok) {
+      token = data.token;
+      document.getElementById('logout-btn').style.display = 'inline';
+      fetchProtected();
+    }
+  }
+
+  async function fetchProtected() {
+    const res  = await fetch('/api/protected', {
+      headers: {'Authorization': 'Bearer ' + token}
+    });
+    log(await res.json());
+  }
+
+  function doLogout() {
+    token = null;
+    document.getElementById('logout-btn').style.display = 'none';
+    log({message: 'logged out'});
+  }
+
+  function log(data) {
+    document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+  }
+</script>
+</body>
+</html>
