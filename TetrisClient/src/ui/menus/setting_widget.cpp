@@ -21,7 +21,7 @@ void SettingWidget::setupUi() {
     m_titleLabel->setAlignment(Qt::AlignCenter);
 
     m_backButton = new QPushButton("Back");
-    m_backButton->setStyleSheet("font-size: 14px; padding: 8px; background: #555; color: white; border-radius: 5px;");
+    m_backButton->setStyleSheet(btnStyle );
 
     layout->addWidget(m_titleLabel);
     layout->addStretch();

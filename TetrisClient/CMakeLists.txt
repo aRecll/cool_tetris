@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.19)
 project(TetrisClient LANGUAGES CXX)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Gui Widgets Network Svg)
+find_package(Qt6  REQUIRED COMPONENTS Gui Widgets Network Svg)
 
 qt_standard_project_setup()
 include_directories(src/core src/ui src/ui/menus src/ui/ingame src/settings src/network src/ui/menus/Authorization)
@@ -38,6 +38,7 @@ qt_add_executable(TetrisClient
     src/ui/menus/Authorization/login_form.h src/ui/menus/Authorization/login_form.cpp src/ui/menus/Authorization/login_form.ui
     src/ui/menus/Authorization/registrate_form.h src/ui/menus/Authorization/registrate_form.cpp src/ui/menus/Authorization/registrate_form.ui
     src/ui/menus/Authorization/user_widget.h src/ui/menus/Authorization/user_widget.cpp
+    src/network/network_managerv2.h src/network/network_managerv2.cpp
 )
 
 target_link_libraries(TetrisClient

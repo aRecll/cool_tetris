@@ -29,8 +29,11 @@
    </item>
    <item>
     <widget class="QLabel" name="label">
+     <property name="styleSheet">
+      <string notr="true">background:transparent</string>
+     </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string>Sigin</string>
      </property>
     </widget>
    </item>
@@ -55,12 +58,30 @@
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="RegistrateButton">
+    <widget class="QLabel" name="label_2">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="styleSheet">
-      <string notr="true">font-size: 16px; padding: 10px; background: #333; color: white; border-radius: 5px;</string>
+      <string notr="true">background:transparent</string>
      </property>
      <property name="text">
-      <string>REGISTRATE</string>
+      <string>Tru again</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="RegistrateButton">
+     <property name="styleSheet">
+      <string notr="true">QPushButton { 
+font-size: 20px; padding: 10px; background: #333; color: white; border-radius: 5px; 
+}
+ 
+
+QPushButton:hover { background: #555; }</string>
+     </property>
+     <property name="text">
+      <string>SIGIN</string>
      </property>
     </widget>
    </item>
@@ -80,7 +101,12 @@
    <item>
     <widget class="QPushButton" name="backButton">
      <property name="styleSheet">
-      <string notr="true">font-size: 14px; padding: 8px; background: #555; color: white; border-radius: 5px;</string>
+      <string notr="true">QPushButton { 
+font-size: 20px; padding: 10px; background: #333; color: white; border-radius: 5px; 
+}
+ 
+
+QPushButton:hover { background: #555; }</string>
      </property>
      <property name="text">
       <string>Back</string>

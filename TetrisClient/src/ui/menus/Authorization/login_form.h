@@ -14,14 +14,22 @@ class LoginForm : public QWidget
 public:
     explicit LoginForm(QWidget *parent = nullptr);
     ~LoginForm();
-    QString nickname() const;
+
     void setNickname(const QString& nickname);
 signals:
     //void authCompleted(const QString& nickname);
     void backInAuthFormClicked();
+public slots:
+    void onLoginFailed(QString err);
+    void onLoginSuccess();
 private slots:
    // void onLoginClicked();
+    void onLoginClicked();
+  //  void onLoginFailed();
+   // void onLoginSucsess();
 private:
+    QString getNickname() const;
+    QString getPassword() const;
     Ui::login_form *ui;
 };
 
