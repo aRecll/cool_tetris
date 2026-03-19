@@ -1,0 +1,9 @@
+
+<RCC>
+  <qresource prefix="/">
+    <file alias="index.html">html/index.html</file>
+    <file alias="cert.pem">secure/cert.pem</file>
+    <file alias="key.pem">secure/key.pem</file>
+  </qresource>
+</RCC>
+
