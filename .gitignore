@@ -8,9 +8,14 @@
 *.key
 *.pfx
 
-# Исключаем конкретные файлы, которые мы только что создали
+# Ignore redis binary dump (dump.rdb) files
+
+*.rdb
+
+# End of https://www.toptal.com/developers/gitignore/api/redis
 key.pem
 cert.pem
+*.env
 *.autosave
 *.a
 *.bd
@@ -45,6 +50,8 @@ Thumbs.db
 *.rc
 /.qmake.cache
 /.qmake.stash
+deploy
+/deploy
 personal/
 /personal/
 # qtcreator generated files

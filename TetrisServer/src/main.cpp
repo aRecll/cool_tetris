@@ -9,6 +9,8 @@
 #include <QJsonObject>
 #include <QUuid>
 #include <QMap>
+#include <QSqlDatabase>
+#include <QSqlError>
 
 static QMap<QString, int> s_tokens;
 
@@ -29,14 +31,59 @@ int db_validateToken(const QString& token) {
     // TODO: SELECT user_id FROM sessions WHERE token=? AND expires_at > NOW()
     return s_tokens.value(token, -1);
 }
+bool connectToDatabase() {
+    QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL");
 
+    // "db" — это имя сервиса из твоего docker-compose.yml
+    // Если запускаешь локально (не в докере), поменяй на "localhost"
+    QString host = qEnvironmentVariable("DB_HOST", "localhost");
+    QString name = qEnvironmentVariable("DB_NAME", "my_database");
+    QString user = qEnvironmentVariable("DB_USER", "user");
+    QString pass = qEnvironmentVariable("DB_PASS", "password");
+    int port     = qEnvironmentVariable("DB_PORT", "5432").toInt();
+
+    db.setHostName(host);
+    db.setDatabaseName(name);
+    db.setUserName(user);
+    db.setPassword(pass);
+    db.setPort(port);
+
+    if (!db.open()) {
+        qCritical() << "Ошибка подключения к БД:" << db.lastError().text();
+        return false;
+    }
+
+    qInfo() << "Успешное подключение к PostgreSQL на хосте:" << host;
+    return true;
+}
+
+// redisContext* connectToRedis() {
+//     // Аналогично: "redis" — имя сервиса из docker-compose
+//     const char* hostname = "redis";
+//     int port = 6379;
+
+//     redisContext* c = redisConnect(hostname, port);
+
+//     if (c == nullptr || c->err) {
+//         if (c) {
+//             std::cerr << "Ошибка Redis: " << c->errstr << std::endl;
+//             redisFree(c);
+//         } else {
+//             std::cerr << "Не удалось выделить контекст Redis" << std::endl;
+//         }
+//         return nullptr;
+//     }
+
+//     std::cout << "Успешное подключение к Redis!" << std::endl;
+//     return c;
+// }
 int main(int argc, char* argv[]) {
     QCoreApplication app(argc, argv);
 
     QHttpServer server;
 
     // POST /api/login
-
+    connectToDatabase();
     server.route("/", QHttpServerRequest::Method::Get,
                  []() -> QHttpServerResponse
                  {
@@ -136,15 +183,15 @@ int main(int argc, char* argv[]) {
 
     auto* sslServer = new QSslServer();
     sslServer->setSslConfiguration(sslConfig);
+    int server_port     = qEnvironmentVariable("SERVER_PORT", "8443").toInt();
+    if (!sslServer->listen(QHostAddress::Any, server_port  ))
 
-    if (!sslServer->listen(QHostAddress::LocalHost, 8443)
-        || !server.bind(sslServer))
     {
         qCritical() << "Failed to start HTTPS server";
         delete sslServer;
         return -1;
     }
-
+    server.bind(sslServer);
     qInfo() << "HTTPS server on https://127.0.0.1:" << sslServer->serverPort();
     return app.exec();
 }
